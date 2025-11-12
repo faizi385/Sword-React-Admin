@@ -198,7 +198,7 @@ function AppContent() {
       {/* Toast Notifications */}
       <Toaster position="top-center" />
       
-      <div className="flex min-h-screen bg-gray-900 text-white">
+      <div className="flex min-h-screen bg-white text-black">
         {/* Sidebar */}
         <Sidebar 
           isOpen={isSidebarOpen} 

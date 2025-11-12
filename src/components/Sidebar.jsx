@@ -97,7 +97,7 @@ const Sidebar = ({ isOpen, toggleSidebar, isMobile }) => {
           opacity: isOpen ? 1 : 0
         }}
         transition={{ type: 'tween', duration: 0.3 }}
-        className={`fixed top-0 left-0 h-full w-64 bg-gray-800 text-white z-40`}
+        className={`fixed top-0 left-0 h-full w-64 bg-black text-white z-40`}
       >
         {/* Logo */}
         <div className="flex items-center justify-between p-6 border-b border-gray-800">
