@@ -32,7 +32,10 @@ const Sidebar = ({ isOpen, toggleSidebar, isMobile }) => {
     { id: 'settings', name: 'Settings', icon: <FiSettings size={20} /> },
   ];
 
-  const handleItemClick = (itemId) => {
+  const handleItemClick = (itemId, currentPath) => {
+    // Don't do anything if this is the active item
+    if (activeItem === itemId) return;
+    
     console.log('Sidebar item clicked:', itemId);
     
     // Map the item ID to the correct route path
@@ -52,12 +55,8 @@ const Sidebar = ({ isOpen, toggleSidebar, isMobile }) => {
     // Update active item after navigation
     setActiveItem(itemId);
     
-    // Force a re-render by navigating to the same route if already there
-    if (window.location.pathname === route) {
-      window.location.reload();
-    } else {
-      navigate(route);
-    }
+    // Navigate to the new route
+    navigate(route);
     
     if (isMobile) {
       toggleSidebar();
@@ -124,13 +123,14 @@ const Sidebar = ({ isOpen, toggleSidebar, isMobile }) => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <button
-                  onClick={() => handleItemClick(item.id)}
-                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 ${
-                    activeItem === item.id 
-                      ? 'text-white font-semibold bg-gradient-to-r from-red-900/30 to-transparent border-l-4 border-red-600 shadow-lg shadow-red-500/10' 
-                      : 'text-gray-300 hover:text-white hover:bg-gray-800/50 hover:pl-6'
-                  } ${item.isHighlighted ? 'text-red-400' : ''}`}
+                <div
+                  key={item.id}
+                  onClick={() => handleItemClick(item.id, activeItem)}
+                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                    activeItem === item.id
+                      ? 'bg-gray-700 text-white cursor-default'
+                      : 'text-gray-300 hover:bg-gray-700 hover:text-white cursor-pointer'
+                  } ${item.isHighlighted ? 'bg-red-900/30 hover:bg-red-900/40' : ''}`}
                 >
                   <span className={`transition-transform duration-300 ${
                     activeItem === item.id ? 'text-red-400' : 'text-gray-400'
@@ -143,7 +143,7 @@ const Sidebar = ({ isOpen, toggleSidebar, isMobile }) => {
                       Hot
                     </span>
                   )}
-                </button>
+                </div>
               </motion.li>
             ))}
           </ul>
